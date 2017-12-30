@@ -1,0 +1,38 @@
+{
+	"info": {
+		"name": "SoapService [SOAP]",
+		"_postman_id": "90449b73-921d-8d23-04ab-a462658c307f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getEmployees [SOAP]",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:soap=\"http://www.avoodoo.com/avoodoo-soap-service/EmployeeWebService\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <soap:getEmployees>\r\n         <!--Optional:-->\r\n         <employeeRequest>\r\n            <abteilungsNummer>5</abteilungsNummer>\r\n         </employeeRequest>\r\n      </soap:getEmployees>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+				},
+				"url": {
+					"raw": "{{soapService}}/soap-service-war/EmployeeWebService",
+					"host": [
+						"{{soapService}}"
+					],
+					"path": [
+						"soap-service-war",
+						"EmployeeWebService"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,60 @@
+{
+	"info": {
+		"name": "soap-rest-adapter-function-war",
+		"_postman_id": "e894eb46-28df-23b5-4301-260b5e27083a",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getEmployeeRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{soapRestAdapter}}/soap-rest-adapter-function-war/rest/getEmployeeRequest",
+					"host": [
+						"{{soapRestAdapter}}"
+					],
+					"path": [
+						"soap-rest-adapter-function-war",
+						"rest",
+						"getEmployeeRequest"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "getAllEmployees",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"abteilungsNummer\": 5\n}"
+				},
+				"url": {
+					"raw": "{{soapRestAdapter}}/soap-rest-adapter-function-war/rest/getAllEmployees",
+					"host": [
+						"{{soapRestAdapter}}"
+					],
+					"path": [
+						"soap-rest-adapter-function-war",
+						"rest",
+						"getAllEmployees"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

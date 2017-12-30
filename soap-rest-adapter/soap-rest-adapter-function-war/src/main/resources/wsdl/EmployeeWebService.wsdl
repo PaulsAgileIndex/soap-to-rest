@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.avoodoo.com/avoodoo-soap-service/EmployeeWebService" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="EmployeeWebService" targetNamespace="http://www.avoodoo.com/avoodoo-soap-service/EmployeeWebService">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.avoodoo.com/avoodoo-soap-service/EmployeeWebService" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://www.avoodoo.com/avoodoo-soap-service/EmployeeWebService">
+  <xs:element name="getEmployees" type="tns:getEmployees"/>
+  <xs:element name="getEmployeesResponse" type="tns:getEmployeesResponse"/>
+  <xs:complexType name="getEmployees">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="employeeRequest" type="tns:sapEmployeeRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sapEmployeeRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:defaultWs">
+        <xs:sequence>
+          <xs:element name="abteilungsNummer" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="defaultWs">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="getEmployeesResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmployeeResponse" type="tns:sapEmployeeResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sapEmployeeResponse">
+    <xs:complexContent>
+      <xs:extension base="tns:defaultWs">
+        <xs:sequence>
+          <xs:element name="countEmployeesInAbteilung" type="xs:int"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="employees" type="tns:sapEmployee"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="sapEmployee">
+    <xs:complexContent>
+      <xs:extension base="tns:defaultWs">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+          <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+          <xs:element name="personnelNumber" type="xs:int"/>
+          <xs:element minOccurs="0" name="birthDate" type="xs:string"/>
+          <xs:element name="abteilungsNummer" type="xs:int"/>
+          <xs:element minOccurs="0" name="gender" type="tns:Gender"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="wsFaultInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="malfuctionSystem" type="xs:string"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+      <xs:element minOccurs="0" name="messageId" type="xs:string"/>
+      <xs:element minOccurs="0" name="messageType" type="xs:string"/>
+      <xs:element minOccurs="0" name="originalMalfunctionSystem" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="Gender">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FEMALE"/>
+      <xs:enumeration value="MALE"/>
+      <xs:enumeration value="INTER"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="WsFault" nillable="true" type="tns:wsFaultInfo"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getEmployeesResponse">
+    <wsdl:part element="tns:getEmployeesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEmployees">
+    <wsdl:part element="tns:getEmployees" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="WsFault">
+    <wsdl:part element="tns:WsFault" name="WsFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="EmployeeWs">
+    <wsdl:operation name="getEmployees">
+      <wsdl:input message="tns:getEmployees" name="getEmployees">
+    </wsdl:input>
+      <wsdl:output message="tns:getEmployeesResponse" name="getEmployeesResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WsFault" name="WsFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EmployeeWebServiceSoapBinding" type="tns:EmployeeWs">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getEmployees">
+      <soap:operation soapAction="getEmployees" style="document"/>
+      <wsdl:input name="getEmployees">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getEmployeesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WsFault">
+        <soap:fault name="WsFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EmployeeWebService">
+    <wsdl:port binding="tns:EmployeeWebServiceSoapBinding" name="HTTP_Port">
+      <soap:address location="http://localhost:8080/soap-service-war/EmployeeWebService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

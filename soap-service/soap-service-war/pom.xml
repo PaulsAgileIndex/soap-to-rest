@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.avoodoo</groupId>
+		<artifactId>soap-service</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>soap-service-war</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>soap-service-war</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>com.avoodoo</groupId> -->
+		<!-- <artifactId>avoodoo-base-server-jar</artifactId> -->
+		<!-- <version>1.0-SNAPSHOT</version> -->
+		<!-- </dependency> -->
+	</dependencies>
+
+	<!-- <modules> <module>avoodoo-nba-interface-client-jar</module> <module>avoodoo-nba-interface-common-jar</module> 
+		</modules> -->
+
+	<build>
+		<finalName>soap-service-war</finalName>
+	</build>
+	<properties>
+		<master.pom.checkstyle.config>${user.shared.dir}/config/checkstyle/sl-checkstyle-5.0-v1.2-light.xmlavoodoo-soap-service
+		</master.pom.checkstyle.config>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+	</properties>
+
+	<profiles>
+		<profile>
+			<!-- Complex Deployment and Resource Examples https://docs.jboss.org/wildfly/plugins/maven/latest/examples/complex-example.html 
+				Call the Maven command 'mvn clean install -Pwildfly' to deploy the software. -->
+			<id>wildfly</id>
+			<build>
+				<finalName>soap-service-war</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.wildfly.plugins</groupId>
+						<artifactId>wildfly-maven-plugin</artifactId>
+						<executions>
+
+							<!-- Deploy the application on install - https://docs.jboss.org/wildfly/plugins/maven/latest/examples/complex-example.html -->
+							<execution>
+								<id>deploy</id>
+								<phase>install</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+
+							<!-- Un-Deploy the application on install - https://docs.jboss.org/wildfly/plugins/maven/latest/examples/complex-example.html -->
+							<execution>
+								<id>undeploy</id>
+								<phase>clean</phase>
+								<goals>
+									<goal>undeploy</goal>
+								</goals>
+								<configuration>
+									<ignoreMissingDeployment>true</ignoreMissingDeployment>
+								</configuration>
+							</execution>
+
+							<!-- Deploy the JDBC library - https://docs.jboss.org/wildfly/plugins/maven/latest/examples/complex-example.html -->
+
+							<!-- Add a data source - https://docs.jboss.org/wildfly/plugins/maven/latest/examples/complex-example.html -->
+
+							<!-- Add an XA datasource - https://docs.jboss.org/wildfly/plugins/maven/latest/examples/complex-example.html -->
+						</executions>
+						<configuration>
+							<filename>${project.build.finalName}.war</filename>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
